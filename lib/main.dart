@@ -1,8 +1,7 @@
 // lib/main.dart
-// WERSJA TYMCZASOWA — bez Firebase i Hive (do testowania UI)
-// Docelowo wrócimy do pełnej wersji po skonfigurowaniu Firebase
 
 import 'package:flutter/material.dart';
+import 'screens/favorites/favorites_screen.dart';
 import 'screens/home/home_screen.dart';
 
 Future<void> main() async {
@@ -22,7 +21,50 @@ class DishcoveryApp extends StatelessWidget {
         colorSchemeSeed: Colors.orange,
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home: const MainNavigation(),
+    );
+  }
+}
+
+class MainNavigation extends StatefulWidget {
+  const MainNavigation({super.key});
+
+  @override
+  State<MainNavigation> createState() => _MainNavigationState();
+}
+
+class _MainNavigationState extends State<MainNavigation> {
+  int _currentIndex = 0;
+
+  final _screens = const [
+    HomeScreen(),
+    FavoritesScreen(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _screens[_currentIndex],
+      bottomNavigationBar: NavigationBar(
+        backgroundColor: Colors.white,
+        indicatorColor: const Color(0xFFFF6B35).withOpacity(0.15),
+        selectedIndex: _currentIndex,
+        onDestinationSelected: (index) =>
+            setState(() => _currentIndex = index),
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.home_outlined),
+            selectedIcon: Icon(Icons.home_rounded, color: Color(0xFFFF6B35)),
+            label: 'Odkrywaj',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.favorite_border_rounded),
+            selectedIcon:
+                Icon(Icons.favorite_rounded, color: Color(0xFFFF6B35)),
+            label: 'Ulubione',
+          ),
+        ],
+      ),
     );
   }
 }
