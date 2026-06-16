@@ -1,21 +1,39 @@
 // lib/services/analytics_service.dart
-// WERSJA TYMCZASOWA — logi tylko w konsoli, bez Firebase
-// Docelowo podepniemy Firebase Analytics
+
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class AnalyticsService {
+  final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
+
+  // Event 1 — wybór kategorii
   Future<void> logCategorySelected(String categoryName) async {
-    print('[Analytics] category_selected: $categoryName');
+    await _analytics.logEvent(
+      name: 'category_selected',
+      parameters: {'category_name': categoryName},
+    );
   }
 
+  // Event 2 — wejście w szczegóły przepisu
   Future<void> logMealViewed(String mealId, String mealName) async {
-    print('[Analytics] meal_viewed: $mealName ($mealId)');
+    await _analytics.logEvent(
+      name: 'meal_viewed',
+      parameters: {'meal_id': mealId, 'meal_name': mealName},
+    );
   }
 
+  // Event 3 — dodanie/usunięcie z ulubionych
   Future<void> logFavoriteToggled({
     required String mealId,
     required String mealName,
     required bool added,
   }) async {
-    print('[Analytics] favorite_toggled: $mealName -> ${added ? 'added' : 'removed'}');
+    await _analytics.logEvent(
+      name: 'favorite_toggled',
+      parameters: {
+        'meal_id': mealId,
+        'meal_name': mealName,
+        'action': added ? 'added' : 'removed',
+      },
+    );
   }
 }
