@@ -1,16 +1,35 @@
-# dishcovery
+# Dishcovery 🍽️
 
-A new Flutter project.
+Aplikacja mobilna na zaliczenie przedmiotu **Tworzenie Aplikacji Mobilnych** (Flutter).
 
-## Getting Started
+## Opis
 
-This project is a starting point for a Flutter application.
+Dishcovery pozwala przeglądać przepisy kulinarne z całego świata przy użyciu
+bezpłatnego API [TheMealDB](https://www.themealdb.com/).
+Aplikacja działa również **offline** — ulubione przepisy są zapisywane lokalnie.
 
-A few resources to get you started if this is your first Flutter project:
+## Funkcjonalności
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- 📋 Przeglądanie kategorii posiłków
+- 🍗 Lista posiłków w wybranej kategorii
+- 📖 Szczegóły przepisu (składniki, instrukcja)
+- ❤️ Ulubione — zapis lokalny, dostępne bez internetu
+- 🔍 Wyszukiwarka przepisów po nazwie
+- 🔄 Manualne odświeżenie danych (pull-to-refresh)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Technologie
+
+| Warstwa | Technologia |
+|---------|-------------|
+| Framework | Flutter |
+| REST API | TheMealDB |
+| Analityka | Firebase Analytics |
+| Raporty błędów | Firebase Crashlytics |
+
+## Firebase Events
+
+| Nazwa eventu | Kiedy |
+|---|---|
+| `category_selected` | Kliknięcie kategorii |
+| `meal_viewed` | Wejście w szczegóły przepisu |
+| `favorite_toggled` | Dodanie / usunięcie z ulubionych |
