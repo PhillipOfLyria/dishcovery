@@ -1,11 +1,15 @@
 // lib/services/favorites_service.dart
-// WERSJA TYMCZASOWA — przechowuje ulubione w pamięci (bez Hive)
-// Hive podepniemy gdy dodamy build_runner
+// Singleton — wszystkie ekrany dzielą tę samą instancję,
+// dzięki czemu ulubione zapisane na jednym ekranie są widoczne na innych.
 
 import '../models/meal_favorite.dart';
 
 class FavoritesService {
-  // Mapa id -> MealFavorite (w pamięci aplikacji)
+  FavoritesService._internal();
+  static final FavoritesService _instance = FavoritesService._internal();
+  factory FavoritesService() => _instance;
+
+  // Mapa id -> MealFavorite (wspólna dla całej aplikacji)
   final Map<String, MealFavorite> _favorites = {};
 
   Future<void> addFavorite(MealFavorite meal) async {

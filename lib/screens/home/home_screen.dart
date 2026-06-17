@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../models/meal_category.dart';
 import '../../services/analytics_service.dart';
 import '../../services/meal_api_service.dart';
+import '../meal_detail/meal_detail_screen.dart';
 import '../meals_list/meals_list_screen.dart';
 import 'widgets/category_card.dart';
 import 'widgets/category_shimmer_grid.dart';
@@ -47,6 +48,30 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  /// Losowy posiłek — przycisk z ikoną kostki w AppBar
+  Future<void> _onRandomMealTap() async {
+    try {
+      final meal = await _apiService.getRandomMeal();
+      if (!mounted) return;
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => MealDetailScreen(mealId: meal.id, mealName: meal.name),
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text('Nie udało się pobrać losowego przepisu'),
+          backgroundColor: Colors.red.shade400,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,9 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: const Icon(Icons.casino_outlined, color: Color(0xFF1A1A1A)),
             tooltip: 'Losowy przepis',
-            onPressed: () {
-              // TODO: nawigacja do losowego posiłku (ekran MealDetail)
-            },
+            onPressed: _onRandomMealTap,
           ),
         ],
       ),
